@@ -13,7 +13,7 @@ import Cadastro from '@/components/Cadastro.vue'
     Cadastro
   },
   })
-export default class Home extends Vue {}
+export default class Registro extends Vue {}
 </script>
 
 <style>

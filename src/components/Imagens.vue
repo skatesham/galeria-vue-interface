@@ -1,54 +1,38 @@
 <template>
 <div class="container">
+  <h1 class="text-dark pt-3">Minhas Imagens</h1>
     <div class="row">
-        <div class="col-sm-6">
-          <input type="text" v-model="texto">
-          <button @click="inserir">Inserir</button>
-          <button @click="login">Login</button>
-        </div>
-        <div class="col-sm-6">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, indice) in lista" :key="item.nome">
-                <th scope="row">{{ indice +1 }}</th>
-                <td>{{item.nome}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="col-sm-12">
+        <img @click="mostrar" v-for="image in lista" v-bind:key='image'  alt="Vue logo" :src="image.url">
+      </div>
     </div>
 </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import imagem from '@/assets/img/logo.png'
 
 export default {
   name: 'Imagens',
   data(){
-    return {
-      nome: 'default',
-      texto: '',
-      lista: [
-        {nome: '123'},
-        {nome: '1234'}
+    return{
+      lista:[
+        {url:imagem},
+        {url:imagem},
+        {url:imagem},
+        {url:imagem},
+        {url:imagem},
+        {url:imagem},
+        {url:imagem},
+        {url:imagem},
       ]
     }
   },
   methods:{
-    login(){
-      this.$router.push('/');
-    },
-    inserir(){
-      this.lista.push({nome: this.texto});
+    mostrar(evt){
+      alert(evt.target.src)
     }
   }
 }
 </script>
-

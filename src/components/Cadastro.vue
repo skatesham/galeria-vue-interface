@@ -8,37 +8,37 @@
 					</div>
 					<div class="card fat">
 						<div class="card-body">
-							<h4 class="card-title">Register</h4>
+							<h4 class="card-title">Criar Conta</h4>
 							<form method="POST">
 							 
 								<div class="form-group">
-									<label for="name">Name</label>
+									<label for="name">Nome</label>
 									<input id="name" type="text" class="form-control" name="name" required autofocus>
 								</div>
 
 								<div class="form-group">
-									<label for="email">E-Mail Address</label>
+									<label for="email">Nome de usuário</label>
 									<input id="email" type="email" class="form-control" name="email" required>
 								</div>
 
 								<div class="form-group">
-									<label for="password">Password</label>
+									<label for="password">Senha</label>
 									<input id="password" type="password" class="form-control" name="password" required data-eye>
 								</div>
 
 								<div class="form-group">
 									<label>
-										<input type="checkbox" name="aggree" value="1"> I agree to the Terms and Conditions
+										<input type="checkbox" name="aggree" value="1" required> Eu concordo com termos e condições
 									</label>
 								</div>
 
 								<div class="form-group no-margin">
 									<button type="submit" class="btn btn-primary btn-block">
-										Register
+										Registrar
 									</button>
 								</div>
 								<div class="margin-top20 text-center">
-									Already have an account? <router-link to="/">Login</router-link>
+									Já possui uma conta? <router-link to="/">Login</router-link>
 								</div>
 							</form>
 						</div>
@@ -51,14 +51,14 @@
 </template>
 
 
-<script src="../assets/js/my-login.js">
+<script>
 export default {
     name: 'Cadastro',
     methods: {
     }
 }
 </script>
-<script src="../assets/js/my-login.js">
+<!-- script src="@/assets/js/my-login.js" -->
 
 <style>
 .my-login-page{
