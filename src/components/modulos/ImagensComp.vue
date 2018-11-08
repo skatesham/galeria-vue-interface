@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <h1 class="text-dark pt-3">Minhas Imagens</h1>
+  <h1 class="text-light pt-3">Minhas Imagens</h1>
     <div class="row">
       <div class="col-sm-12">
         <img v-for="image in imagens" v-bind:key='image.id' :title="image.nome"  :alt="image.nome" :src="url">

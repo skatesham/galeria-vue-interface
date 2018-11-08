@@ -1,7 +1,7 @@
 <template>
 <div class='my-login-page text-center'>
 		<div class='container h-100'>
-			<div class='row justify-content-md-center h-100'>
+			<div class='row justify-content-center h-100'>
 				<div class='card-wrapper'>
 					<div class='card fat'>
 						<div class='card-body'>

@@ -2,7 +2,7 @@
 <div class="my-login-page">
     <section class="h-100">
 		<div class="container h-100">
-			<div class="row justify-content-md-center h-100">
+			<div class="row justify-content-center h-100">
 				<div class="card-wrapper">
 					<div class="brand">
 					</div>
@@ -86,7 +86,7 @@ export default {
 			},
 			function (err) {
 				console.log('err', err)
-				alert('Dados Incorretos ou já consumidos')
+				alert('Dados incorretos ou já consumidos')
 			})
 		}
     },

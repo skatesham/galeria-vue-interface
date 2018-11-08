@@ -1,7 +1,7 @@
 <template>
     <div id='inicial'>
         <div class="container">
-            <h1 @click="test"> HOME PAGE</h1>
+            <h1 @click="test" class=" p-3"> HOME PAGE</h1>
             <br>
             <p class="text-success">{{ texto }}</p>
             
@@ -42,7 +42,7 @@
                     <pre> Result time: {{ result }}</pre>
                 </div>
             </div>
-        	<pre> {{ $session.getAll() }}</pre>
+        	<!-- pre> {{ $session.getAll() }}</pre -->
         </div>
         <br>
         <br>

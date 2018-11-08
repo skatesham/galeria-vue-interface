@@ -23,6 +23,17 @@
 }
 
 .bg-menu {
-  background-color: aquamarine;
+  background-color: aquamarine;}
+
+body {
+  background-color: aliceblue;
+  background-image: url('assets/img/gallery.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
 }
+
+.table {
+  background-color: aliceblue;
+}
+
 </style>
