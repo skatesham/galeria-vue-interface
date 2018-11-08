@@ -1,23 +1,21 @@
 <template>
   <div class="registro">
+    <NavbarBlocked/>
     <Cadastro/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import Cadastro from '@/components/Cadastro.vue'
+import Cadastro from '@/components/authentication/Cadastro.vue'
+import NavbarBlocked from '@/components/navbar/NavbarBlocked.vue'
+
 
 @Component({
   components: {
-    Cadastro
+    Cadastro,
+    NavbarBlocked
   },
   })
 export default class Registro extends Vue {}
 </script>
-
-<style>
-img{
-  padding: 30px;
-}
-</style>

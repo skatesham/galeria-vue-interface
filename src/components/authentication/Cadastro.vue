@@ -13,17 +13,17 @@
 							 
 								<div class="form-group">
 									<label for="name">Nome</label>
-									<input id="name" type="text" class="form-control" name="name" required autofocus>
+									<input v-model="name" id="name" type="text" class="form-control" name="name" required autofocus>
 								</div>
 
 								<div class="form-group">
 									<label for="email">Nome de usuário</label>
-									<input id="email" type="email" class="form-control" name="email" required>
+									<input v-model="username" id="email" type="text" class="form-control" name="email" required>
 								</div>
 
 								<div class="form-group">
 									<label for="password">Senha</label>
-									<input id="password" type="password" class="form-control" name="password" required data-eye>
+									<input v-model="password" id="password" type="password" class="form-control" name="password" required data-eye>
 								</div>
 
 								<div class="form-group">
@@ -47,13 +47,23 @@
 			</div>
 		</div>
 	</section>
+	<br>
+	<br>
+	<br>
 </div>
 </template>
 
 
 <script>
 export default {
-    name: 'Cadastro',
+	name: 'Cadastro',
+	data(){
+		return {
+			name: '',
+			username: '',
+			password: ''
+		}
+	},
     methods: {
     }
 }
@@ -62,9 +72,6 @@ export default {
 
 <style>
 .my-login-page{
-    background-image: url("../assets/img/gallery.jpg");
-    height: 100%;
-    padding: 30px;
-    margin: 20px;
+	padding: 20px;
 }
 </style>

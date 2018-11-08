@@ -8,10 +8,13 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "resource": "^0.8.1",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
+    "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
+    "vue-session": "^1.0.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

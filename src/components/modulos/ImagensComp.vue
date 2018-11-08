@@ -6,6 +6,8 @@
         <img @click="mostrar" v-for="image in lista" v-bind:key='image'  alt="Vue logo" :src="image.url">
       </div>
     </div>
+    <br>
+    <br>
 </div>
 </template>
 
@@ -14,7 +16,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import imagem from '@/assets/img/logo.png'
 
 export default {
-  name: 'Imagens',
+  name: 'ImagensComp',
   data(){
     return{
       lista:[
@@ -36,3 +38,9 @@ export default {
   }
 }
 </script>
+
+<style>
+img{
+  padding: 20px;
+}
+</style>

@@ -11,7 +11,7 @@
 								<div class='form-group'>
 									<label for='email'>Nome de Usuário</label>
 
-									<input v-bind='username' id='email' type='text' class='form-control' name='email' value='' required autofocus>
+									<input v-model='username' id='email' type='text' class='form-control' name='email' value='' required autofocus>
 								</div>
 
 								<div class='form-group'>
@@ -21,7 +21,7 @@
 											<small>Esqueceu a senha?</small>
 										</a>
 									</label>
-									<input v-bind='password' id='password' type='password' class='form-control' name='password' required data-eye>
+									<input v-model='password' id='password' type='password' class='form-control' name='password' required data-eye>
 								</div>
 
 								<div class='form-group'>
@@ -44,39 +44,45 @@
 				</div>
 			</div>
 		</div>
+		<pre>
+			{{ $data }}
+		</pre>
 </div>
 </template>
 
 
 
 <script>
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
 export default {
 	name: 'login',
 	data(){
 		return {
-			password: '',
-			username: ''
+			username: '',
+			password: ''
 		}
 	},
   methods: {
     login() {
       this.$http
         .post('http://localhost:8888/GaleriaImagens/login', {
-          password: this.password,
-          username: this.username
+					username: this.username,
+					password: this.password
         })
         .then(
           function(response) {
-            if (response.status === 200 && 'token' in response.body) {
+            if (response.status === 200 && 'senha' in response.body) {
               this.$session.start()
               this.$session.set('jwt', response.body.token);
               Vue.http.headers.common['Authorization'] =
-                'Bearer ' + response.body.token
-              this.$router.push('/about')
+                'Bearer ' + response.body.senha
+              this.$router.push('/home')
             }
           },
           function(err) {
-            console.log('err', err)
+						console.log('err', err)
+						alert("Erro ao tentar fazer login")
           }
         )
     }
@@ -85,9 +91,7 @@ export default {
 </script>
 
 <style>
-.my-login-page {
-  background-image: url('../assets/img/gallery.jpg');
-  height: 100%;
-  padding: 50px;
+.my-login-page{
+	padding: 20px;
 }
 </style>
