@@ -4,11 +4,13 @@ import router from './router'
 import store from './store'
 import VueResource from 'vue-resource'
 import VueSession from 'vue-session'
+import Auth from '@/packages/auth/Auth.js'
 
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
 Vue.use(VueSession)
+Vue.use(Auth)
 
 new Vue({
   router,

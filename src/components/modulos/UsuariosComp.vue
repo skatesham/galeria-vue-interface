@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-12">
         <ul>
-          <li v-for="user in usuarios">
+          <li v-for="user in usuarios" v-bind:key="user.nome">
             <p>{{ user.nome }} | {{ user.email }} | {{ user.usuario }}</p>
           </li>
         </ul>
@@ -23,86 +23,26 @@ export default {
   name: 'UsuariosComp',
   data(){
     return{
-      usuarios : 
-[
-    {
-        "id": 2,
-        "nome": "Sham Vinicius",
-        "senha": "{MD5}202cb962ac59075b964b07152d234b70",
-        "usuario": "sham",
-        "email": "sham@admin.com",
-        "papel": {
-            "id": 2,
-            "descricao": "Usuario Comum"
-        },
-        "imagens": [
-            {
-                "nome": "Imagem Sham",
-                "tamanho": "768x628",
-                "tipo": "jpg"
-            },
-            {
-                "nome": "Imagem Sham",
-                "tamanho": "768x628",
-                "tipo": "jpg"
-            },
-            {
-                "nome": "Imagem Sham",
-                "tamanho": "768x628",
-                "tipo": "jpg"
-            }
-        ]
-    },
-    {
-        "id": 4,
-        "nome": "Claudio Lima",
-        "senha": "{MD5}202cb962ac59075b964b07152d234b70",
-        "usuario": "claudio",
-        "email": "claudio@fatec.com",
-        "papel": {
-            "id": 2,
-            "descricao": "Usuario Comum"
-        },
-        "imagens": []
-    },
-    {
-        "id": 1,
-        "nome": "Administrador",
-        "senha": "{MD5}202cb962ac59075b964b07152d234b70",
-        "usuario": "admin",
-        "email": "admin@admin.com",
-        "papel": {
-            "id": 3,
-            "descricao": "Administrador"
-        },
-        "imagens": []
-    },
-    {
-        "id": 3,
-        "nome": "Lucao",
-        "senha": "{MD5}202cb962ac59075b964b07152d234b70",
-        "usuario": "lucas",
-        "email": "lucas@admin.com",
-        "papel": {
-            "id": 2,
-            "descricao": "Usuario Comum"
-        },
-        "imagens": []
-    },
-    {
-        "id": 7,
-        "nome": "Somente Login",
-        "senha": "{MD5}202cb962ac59075b964b07152d234b70",
-        "usuario": "login",
-        "email": "login@fatec.com",
-        "papel": {
-            "id": 2,
-            "descricao": "Usuario Comum"
-        },
-        "imagens": []
+      usuarios : ''
     }
-]
-    }
+  },
+  methods:{
+      get() {
+          this.$http.get('http://localhost:8888/GaleriaImagens/usuario/getAll')
+          .then(function (response) {
+              if(response.status === 401){
+                this.$session.destroy()
+                this.$router.push('/')
+              } else {
+                console.log(response)
+                this.usuarios = response.body
+              }
+              
+          })
+      }
+  },
+  beforeMount() {
+      this.get()
   }
 }
 </script>

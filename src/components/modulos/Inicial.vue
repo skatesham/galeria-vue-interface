@@ -8,22 +8,38 @@
         <button @click="login">Get Token</button>
         <div class="row">
             Token gerado é:
-            <div class="col-sm-12 alert alert-danger">
+            <div class="col-sm-12 alert alert-success">
                 <pre>{{ token }}</pre>
+            </div>
+            <div class="col-sm-12 alert alert-info">
+                <pre>{{ session }}</pre>
+            </div>
+            <div class="col-sm-12 alert alert-warning">
+                <pre> Expires in: {{ expires }}</pre>
+            </div>
+            <div class="col-sm-12 alert alert-danger">
+                <pre> Result time: {{ result }}</pre>
             </div>
         </div>
         
         </div>
+        <br>
+        <br>
     </div>
 </template>
 
 <script>
+import { Component, Vue } from 'vue-property-decorator'
+
 export default {
     name: 'inicial',
     data () {
         return {
             texto: '',
-            token: ''
+            token: '',
+            session: '',
+            expires: '',
+            result: ''
         }
     },
     methods:{
@@ -32,6 +48,9 @@ export default {
         .then(function (response) {
             console.log(response);
             this.texto = response.bodyText
+            this.session = this.$session.get('token')
+            this.expires = this.$session.get('expires_in')
+            this.result = Date.now() - this.expires
         })
         },
         login () {

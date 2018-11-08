@@ -44,9 +44,9 @@
 				</div>
 			</div>
 		</div>
-		<pre>
-			{{ $data }}
-		</pre>
+		<pre> {{ $session.getAll() }}</pre>
+		<br>
+		
 </div>
 </template>
 
@@ -59,30 +59,31 @@ export default {
 	name: 'login',
 	data(){
 		return {
-			username: '',
-			password: ''
+			username: 'login', // Ok user setted
+			password: '123'
 		}
 	},
   methods: {
     login() {
-      this.$http
-        .post('http://localhost:8888/GaleriaImagens/login', {
+      this.$http.post('http://localhost:8888/GaleriaImagens/login', {
 					username: this.username,
 					password: this.password
         })
         .then(
           function(response) {
-            if (response.status === 200 && 'senha' in response.body) {
-              this.$session.start()
-              this.$session.set('jwt', response.body.token);
+            if (response.status === 200 && 'token' in response.body) {
+							this.$session.start()
+							this.$session.set('token', response.body.token)
+							this.$session.set('expires_in', response.body.expirate)
+							//this.$auth.setToken(response.body.token, response.body.expires_in )
               Vue.http.headers.common['Authorization'] =
-                'Bearer ' + response.body.senha
+                'Bearer ' + response.body.token
               this.$router.push('/home')
             }
           },
           function(err) {
 						console.log('err', err)
-						alert("Erro ao tentar fazer login")
+						alert('Erro ao tentar fazer login')
           }
         )
     }
