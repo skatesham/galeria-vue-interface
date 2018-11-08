@@ -25,3 +25,11 @@ npm run test
 ```
 npm run lint
 ```
+### Login
+![alt-text] (https://raw.githubusercontent.com/skatesham/galeria-vue-interface/master/src/assets/img/readme/Login.png)
+
+### Cadastro
+![alt-text] (https://raw.githubusercontent.com/skatesham/galeria-vue-interface/master/src/assets/img/readme/cadastro.png)
+
+### Imagens
+![alt-text] (https://raw.githubusercontent.com/skatesham/galeria-vue-interface/master/src/assets/img/readme/imagens.png)
