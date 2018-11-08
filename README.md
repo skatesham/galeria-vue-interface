@@ -1,5 +1,5 @@
 # galeria-vue-interface
-Programa Vue com typescript que funciona como a interface de um [projeto Spring boot](https://github.com/skatesham/galeria-spring-boot)... esse possui login cadastro e funcionalidade armazenar images em seu perfil pessoal.
+Programa Vue com typescript que funciona como a interface de um projeto [Spring boot RESTFULL API](https://github.com/skatesham/galeria-spring-boot). Esse possui login, cadastro e funcionalidade armazenar images em seu perfil pessoal via url com requisições HTTP. Os envios são feitos com requisições POST de JSON.
 
 1. Login via Token
 2. Cadastro
