@@ -44,7 +44,6 @@
 				</div>
 			</div>
 		</div>
-		<pre> {{ $session.getAll() }}</pre>
 		<br>
 		
 </div>
@@ -75,6 +74,7 @@ export default {
 							this.$session.start()
 							this.$session.set('token', response.body.token)
 							this.$session.set('expires_in', response.body.expirate)
+							this.$session.set('usuario', response.body.usuario)
 							//this.$auth.setToken(response.body.token, response.body.expires_in )
               Vue.http.headers.common['Authorization'] =
                 'Bearer ' + response.body.token
@@ -86,6 +86,11 @@ export default {
 						alert('Erro ao tentar fazer login')
           }
         )
+    }
+	},
+	beforeCreate: function () {
+    if (this.$session.exists()) {
+      this.$router.push('/home')
     }
   }
 }
