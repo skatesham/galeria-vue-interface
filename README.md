@@ -1,5 +1,10 @@
 # galeria-vue-interface
-Programa VUE que acessa o servidor do repositório galeria-spring-boot
+Programa Vue com typescript que funciona como a interface de um [projeto Spring boot](https://github.com/skatesham/galeria-spring-boot)... esse possui login cadastro e funcionalidade armazenar images em seu perfil pessoal.
+
+1. Login via Token
+2. Cadastro
+3. Acesso com header Authorization com o token recebido
+4. Logout
 
 ## Project setup
 ```
