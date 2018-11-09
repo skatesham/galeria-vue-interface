@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <h1 class="text-dark pt-3">Usuários do Sistema</h1>
+  <h1 class="text-light pt-3">Usuários do Sistema</h1>
     <div class="row">
       <div class="ml-auto col-sm-8 mr-auto">
         <table class="table">

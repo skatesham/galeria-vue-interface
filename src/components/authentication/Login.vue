@@ -23,6 +23,8 @@
 									</label>
 									<input v-model='password' id='password' type='password' class='form-control' name='password' required data-eye>
 								</div>
+								
+								<div v-if="erro" class="alert alert-danger"> Erro ao tentar fazer login</div>
 
 								<div class='form-group'>
 									<label>
@@ -44,6 +46,7 @@
 				</div>
 			</div>
 		</div>
+		<pre> {{ $session.getAll() }}</pre>
 		<br>
 		
 </div>
@@ -59,7 +62,8 @@ export default {
 	data(){
 		return {
 			username: 'login', // Ok user setted
-			password: '123'
+			password: '123',
+			erro: false
 		}
 	},
   methods: {
@@ -71,19 +75,20 @@ export default {
         .then(
           function(response) {
             if (response.status === 200 && 'token' in response.body) {
+							//this.$auth.setToken(response.body.token, response.body.expires_in )
+              Vue.http.headers.common['Authorization'] =
+								'Bearer ' + response.body.token
 							this.$session.start()
 							this.$session.set('token', response.body.token)
 							this.$session.set('expires_in', response.body.expirate)
 							this.$session.set('usuario', response.body.usuario)
-							//this.$auth.setToken(response.body.token, response.body.expires_in )
-              Vue.http.headers.common['Authorization'] =
-                'Bearer ' + response.body.token
               this.$router.push('/home')
             }
           },
           function(err) {
 						console.log('err', err)
-						alert('Erro ao tentar fazer login')
+						this.erro = true
+						//alert('Erro ao tentar fazer login')
           }
         )
     }
