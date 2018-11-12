@@ -60,6 +60,8 @@
 
 
 <script>
+import Mostrar from '@/assets/js/my-login.js'
+
 export default {
 	name: 'Cadastro',
 	data(){

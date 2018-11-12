@@ -1,32 +1,37 @@
 <template>
-<!-- Image hover effects source https://bootsnipp.com/snippets/R5aZB -->
 <div class="container">
   <h1 class="text-light">Minhas Imagens</h1>
+
+    <!-- ENVIAR IMAGEM -->
     <div class="row">
-      <div class="col-sm-8 ml-auto mr-auto">
-        <h3 class="m-3 text-left">Enviar Imagem</h3>
+      <div class="col-sm-8 ml-auto mr-auto card">
+        <h5 class="m-2 text-left">Enviar Imagem</h5>
         <div>
-          <b-form-input v-model="nome"
-                        type="text"
-                        placeholder="Insira um nome"></b-form-input>
+            <b-form-input class="mb-2 mt-2" v-model="nome" type="text" placeholder="Insira um nome"></b-form-input>
         </div>
-        <!-- Styled -->
-        
-        <b-form-file v-model="file" :state="Boolean(file)" placeholder="Choose a file..."></b-form-file>
-        <b-button>Enviar</b-button>
+        <b-form-file v-model="file"
+          ref="fileinput" :state="Boolean(file)"
+           placeholder="Escolha uma imagem..."
+            accept="image/*"
+            @change="onFileChanged"></b-form-file>
+        <b-button class="mb-2 mt-2" id="enviar" @click="onSubmit">Enviar</b-button>
+        <small v-if="success" class="alert alert-success">Imagem enviada com sucesso</small>
+        <input type="text" id="url" hidden/>
       </div>
     </div>
+    <!-- MOSTRAR IMAGENS -->
     <div class="row">
+    <!-- Image hover effects source https://bootsnipp.com/snippets/R5aZB -->
       <div class="box" v-for="image in imagens" v-bind:key='image.id'>
           <div class="imgBox">
-              <img  :title="image.nome"  :alt="image.nome" :src="url">
+              <img  :title="image.nome"  :alt="image.nome" :src="image.imagemBase64">
           </div>
           <div class="content">
               <h2> {{ image.nome }}</h2>
-              <p>
+              <div>
                 <p> Tamanho: {{ image.tamanho }}</p>
                 <p> Tipo:  {{ image.tipo }}</p>
-              </p>
+              </div>
           </div>
       </div>
     </div>
@@ -36,35 +41,85 @@
 </template>
 
 <script>
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import imagem from '@/assets/img/logo.png'
+import { Component, Prop, Vue } from "vue-property-decorator";
 
-
-// FALTA USUARIO NA REQUISIÇÃO E ENVIAR IMAGEM
 export default {
-  name: 'ImagensComp',
-  data(){
-    return{
-      imagens: '',
-      url: imagem,
+  name: "ImagensComp",
+  data() {
+    return {
+      imagens: [],
+      url: "",
       file: '',
       nome: '',
       tamanho: '',
-      tipo: ''
-      // slice type filename.split('.').pop()
+      tipo: '',
+      success: false,
+      ready: false,
+      usuario: ''
+    };
+  },
+  methods: {
+    get(usuario) {
+      this.usuario = usuario
+      this.$http
+        .get(
+          "http://localhost:8888/GaleriaImagens/imagem/getFullByUsuario/" +
+            usuario.usuario
+        )
+        .then(function(response) {
+          console.log(response);
+          this.imagens = response.body
+        });
+    },
+    onSubmit() {
+      this.url = $("#url").val()
+      if(this.url != ''){
+        this.ready = true
+      }
+      if(this.ready){
+        this.enviar()
+      } else{
+        alert("Envio não concluido por atributos faltando")
+      }
+      this.$refs.fileinput.reset()
+    },
+    onFileChanged (evt) {
+      this.file = evt.target.files[0]
+      this.tipo = this.file.type
+      this.tamanho = parseFloat((this.file.size/1000)/1000).toFixed(3) + " MB"
+      var reader = new FileReader()
+      reader.readAsDataURL(this.file)
+      reader.onload = function () {
+        //console.log(reader.result)
+        $('#url').val(reader.result);
+      };
+      reader.onerror = function(error) {
+        console.log("Error: ", error)
+        alert("erro ao carregar imagem!")
+      }
+      console.log(reader.readAsText(this.file))
+
+    },
+    enviar () {
+      this.$http.post('http://localhost:8888/GaleriaImagens/imagem/save',
+        {
+          nome: this.nome,
+          tamanho:this.tamanho,
+          tipo: this.tipo,
+          imagemBase64: this.url,
+          usuario:{
+            id: this.usuario.id
+          }
+        })
+        .then(function(response) {
+          console.log(response);
+          this.success = true
+          this.get()
+        });
     }
   },
-  methods:{
-      get(usuario) {
-          this.$http.get('http://localhost:8888/GaleriaImagens/imagem/getFullByUsuario/' + usuario)
-          .then(function (response) {
-              console.log(response)
-              this.imagens = response.body
-          })
-      }
-  },
-  beforeMount() {
-    var user = this.$session.get('usuario').usuario
+  beforeMount () {
+    var user = this.$session.get('usuario')
     this.get(user)
   }
 }
@@ -72,105 +127,109 @@ export default {
 
 <style>
 body {
-    margin:0;
-    padding:0;
-    font-family:sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
 }
 .container {
-    position:relative;
-    width:1200px;
-    height:600px;
-    margin:20px auto 0;
+  position: relative;
+  width: 1200px;
+  height: 600px;
+  margin: 20px auto 0;
 }
 .container .box {
-    position:relative;
-    width:calc(400px - 60px);
-    height:calc(300px - 30px);
-    background:#000;
-    float:left;
-    margin:15px;
-    box-sizing:border-box;
-    overflow:hidden;
-    box-shadow:0 5px 10px rgba(0,0,0,.8);
+  position: relative;
+  width: calc(400px - 60px);
+  height: calc(300px - 30px);
+  background: #000;
+  float: left;
+  margin: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
 }
 .container .box:before {
-    content:'';
-    position:absolute;
-    top:10px;
-    left:10px;
-    right:10px;
-    bottom:10px;
-    border-top:1px solid #fff;
-    border-bottom:1px solid #fff;
-    box-sizing:border-box;
-    transition:0.5s;
-    transform: scaleX(0);
-    opacity:0;
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  box-sizing: border-box;
+  transition: 0.5s;
+  transform: scaleX(0);
+  opacity: 0;
 }
 .container .box:hover:before {
-    transform:scaleX(1);
-    opacity:1;
+  transform: scaleX(1);
+  opacity: 1;
 }
 .container .box:after {
-    content:'';
-    position:absolute;
-    top:10px;
-    left:10px;
-    right:10px;
-    bottom:10px;
-    border-left:1px solid #fff;
-    border-right:1px solid #fff;
-    box-sizing:border-box;
-    transition:0.5s;
-    transform: scaleY(0);
-    opacity:0;
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+  box-sizing: border-box;
+  transition: 0.5s;
+  transform: scaleY(0);
+  opacity: 0;
 }
 .container .box:hover:after {
-    transform:scaleY(1);
-    opacity:1;
+  transform: scaleY(1);
+  opacity: 1;
 }
 .container .box .imgBox {
-    position:relative;
+  position: relative;
 }
 .container .box .imgBox img {
-    width:100%;
-    transition:0.5s;
+  width: 100%;
+  transition: 0.5s;
 }
 .container .box:hover .imgBox img {
-    opacity:.2;
-    transform:scale(1.2);
+  opacity: 0.2;
+  transform: scale(1.2);
 }
 .container .box .content {
-    position:absolute;
-    width:100%;
-    top:50%;
-    transform:translateY(-50%);
-    z-index:2;
-    padding:20px;
-    box-sizing:border-box;
-    text-align:center;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
 }
 .container .box .content h2 {
-    margin: 0 0 10px;
-    padding:0;
-    color:#fff;
-    transition:0.5s;
-    transform:translateY(-50px);
-    opacity:0;
-    visibility:hidden;
+  margin: 0 0 10px;
+  padding: 0;
+  color: #fff;
+  transition: 0.5s;
+  transform: translateY(-50px);
+  opacity: 0;
+  visibility: hidden;
 }
 .container .box .content p {
-    margin:0;
-    padding:0;
-    color:#fff;
-    transform:translateY(50px);
-    opacity:0;
-    visibility:hidden;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  transform: translateY(50px);
+  opacity: 0;
+  visibility: hidden;
 }
 .container .box:hover .content h2,
-.container .box:hover .content P {
-    opacity:1;
-    visibility:visible;
-    transform:translateY(0px);
+.container .box:hover .content p {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0px);
+}
+
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+  content: "Buscar";
 }
 </style>

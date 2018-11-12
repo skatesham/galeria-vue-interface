@@ -18,6 +18,7 @@
             <router-link class="nav-link m-2" to="/usuarios">Usuarios</router-link>
           </li>
         </ul>
+        <a class="nav-link m-2 my-2 my-md-0" style="cursor:default;" disabled> Usuario: {{ usuario }}</a>
         <a @click="logout" class="nav-link m-2 my-2 my-md-0" >Sair</a>
       </div>
     </nav>
@@ -26,6 +27,11 @@
 <script>
 export default {
     name: 'navbar',
+    data (){
+      return {
+        usuario: this.$session.get('usuario').usuario
+      }
+    },
     beforeCreate: function () {
       if (!this.$session.exists()) {
         this.$router.push('/')

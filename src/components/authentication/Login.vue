@@ -46,16 +46,13 @@
 				</div>
 			</div>
 		</div>
-		<pre> {{ $session.getAll() }}</pre>
 		<br>
-		
 </div>
 </template>
 
-
-
 <script>
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import Mostrar from '@/assets/js/my-login.js'
 
 export default {
 	name: 'login',
