@@ -17,7 +17,7 @@
 								<div class='form-group'>
 									<label for='password'>Senha
 										<br>
-										<a href='forgot.html' class='float-right'>
+										<a hidden href='forgot.html' class='float-right'>
 											<small>Esqueceu a senha?</small>
 										</a>
 									</label>
@@ -26,7 +26,7 @@
 								
 								<div v-if="erro" class="alert alert-danger"> Erro ao tentar fazer login</div>
 
-								<div class='form-group'>
+								<div class='form-group' hidden >
 									<label>
 										<input type='checkbox' name='remember'> Lembrar
 									</label>

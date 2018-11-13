@@ -14,8 +14,9 @@
            placeholder="Escolha uma imagem..."
             accept="image/*"
             @change="onFileChanged"></b-form-file>
-        <b-button class="mb-2 mt-2" id="enviar" @click="onSubmit">Enviar</b-button>
+        <b-button class="mb-2 mt-2" id="enviar" :disabled="ready" @click="onSubmit">Enviar</b-button>
         <small v-if="success" class="alert alert-success">Imagem enviada com sucesso</small>
+        <small v-if="erro" class="alert alert-danger">Envio não concluido por atributos faltando</small>
         <input type="text" id="url" hidden/>
       </div>
     </div>
@@ -55,7 +56,8 @@ export default {
       tipo: '',
       success: false,
       ready: false,
-      usuario: ''
+      usuario: '',
+      erro: false
     };
   },
   methods: {
@@ -69,18 +71,21 @@ export default {
         .then(function(response) {
           console.log(response);
           this.imagens = response.body
+          this.$session.set('imagens', this.imagens)
         });
     },
     onSubmit() {
       this.url = $("#url").val()
-      if(this.url != ''){
+      if(this.url != '' && this.nome != ''){
         this.ready = true
       }
       if(this.ready){
         this.enviar()
+        this.erro = false
       } else{
-        alert("Envio não concluido por atributos faltando")
+        this.erro = true
       }
+      this.update()
       this.$refs.fileinput.reset()
     },
     onFileChanged (evt) {
@@ -114,13 +119,17 @@ export default {
         .then(function(response) {
           console.log(response);
           this.success = true
-          this.get()
         });
+    },
+    update (){
+      this.imagens = this.$session.get('imagens')
     }
   },
   beforeMount () {
+    Vue.http.headers.common['Authorization'] = 'Bearer ' + this.$session.get('token')
     var user = this.$session.get('usuario')
     this.get(user)
+    //this.update()
   }
 }
 </script>

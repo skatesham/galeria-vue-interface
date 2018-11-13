@@ -36,6 +36,7 @@ export default {
       if (!this.$session.exists()) {
         this.$router.push('/')
       }
+      Vue.http.headers.common['Authorization'] = 'Bearer ' + this.$session.get('token')
     },
     methods: {
       logout: function () {

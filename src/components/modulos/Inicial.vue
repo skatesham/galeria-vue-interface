@@ -1,9 +1,9 @@
 <template>
     <div id='inicial'>
         <div class="container">
-            <h1 @click="test" class="text-light"> HOME PAGE</h1>
+            <h1 @click="test" class="text-light">Página Inicial</h1>
             <br>
-            <p class="text-success">{{ texto }}</p>
+            <h4 class="p-3 card text-success">Bem Vindo a Galeria de Imagens</h4>
             
             <div class="row">
                 <div class="col-sm-6 ml-auto mr-auto">
@@ -26,23 +26,9 @@
                 </div>
             </div>
 
-            <button @click="login">Get Token</button>
-            <div class="row">
-                Token gerado é:
-                <div class="col-sm-12 alert alert-success">
-                    <pre>{{ token }}</pre>
-                </div>
-                <div class="col-sm-12 alert alert-info">
-                    <pre>{{ session }}</pre>
-                </div>
-                <div class="col-sm-12 alert alert-warning">
-                    <pre> Expires in: {{ expires }}</pre>
-                </div>
-                <div class="col-sm-12 alert alert-danger">
-                    <pre> Result time: {{ result }}</pre>
-                </div>
+            <div class="ml-auto mr-auto col-sm-4 alert alert-danger">
+                <pre> Tempo Restante: {{ result }}</pre>
             </div>
-        	<!-- pre> {{ $session.getAll() }}</pre -->
         </div>
         <br>
         <br>
@@ -72,7 +58,7 @@ export default {
             this.texto = response.bodyText
             this.session = this.$session.get('token')
             this.expires = this.$session.get('expires_in')
-            this.result = Date.now() - this.expires
+            this.result = (Math.round((((Date.now() - this.expires)/1000)/60)*100)/100).toFixed(2) + " Min"
             this.usuario = this.$session.get('usuario')
         })
         },

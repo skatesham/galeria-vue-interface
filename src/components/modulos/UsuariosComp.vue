@@ -47,13 +47,16 @@ export default {
               } else {
                 console.log(response)
                 this.usuarios = response.body
+                this.$session.set('usuarios',this.usuarios)
               }
               
           })
       }
   },
   beforeMount() {
+      Vue.http.headers.common['Authorization'] = 'Bearer ' + this.$session.get('token')
       this.get()
+      //this.usuarios = this.$session.get('usuarios')
   }
 }
 </script>
