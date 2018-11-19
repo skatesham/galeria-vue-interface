@@ -1,35 +1,28 @@
 export default function (Vue) {
     Vue.auth = {
-        setToken (token, expires) {
-            
+        setToken(token, expires) {
             localStorage.setItem('token', token)
             localStorage.setItem('expires_in', expires)
         },
-
-        getToken () {
+        getToken() {
             var token = localStorage.getItem('token')
             var expiration = localStorage.getItem('expires_in')
-
-            if(! token || ! expiration)
+            if (!token || !expiration)
                 return null
-
-            if(Date.now() > parseInt(expiration)) {
+            if (Date.now() > parseInt(expiration)) {
                 this.destroyToken()
                 return null
             } else
                 return token
-
         },
-
-        destroyToken () {
+        destroyToken() {
             localStorage.removeItem('token')
             localStorage.removeItem('expires_in')
         },
-
-        isAuthenticated () {
-            if(this.getToken())
+        isAuthenticated() {
+            if (this.getToken())
                 return true
-            else{
+            else {
                 return false
             }
         }
@@ -37,7 +30,7 @@ export default function (Vue) {
 
     Object.defineProperties(Vue.prototype, {
         $auth: {
-            get () {
+            get() {
                 return Vue.auth
             }
         }

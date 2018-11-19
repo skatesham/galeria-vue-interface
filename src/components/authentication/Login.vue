@@ -79,6 +79,7 @@ export default {
 							this.$session.set('token', response.body.token)
 							this.$session.set('expires_in', response.body.expirate)
 							this.$session.set('usuario', response.body.usuario)
+							this.$session.set('permissao', response.body.usuario.papel.descricao)
               this.$router.push('/home')
             }
           },

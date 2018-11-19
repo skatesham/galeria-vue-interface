@@ -5,6 +5,7 @@ import Logar from './views/Logar.vue'
 import Registro from './views/Registro.vue'
 import Usuarios from './views/Usuarios.vue'
 import Imagens from './views/Imagens.vue'
+import EnviarImagem from './views/EnviarImagem.vue'
 
 Vue.use(Router)
 
@@ -45,6 +46,11 @@ export default new Router({
       name: 'imagens',
       component: Imagens
     },
+    {
+      path: '/enviar',
+      name: 'enviar',
+      component: EnviarImagem
+    }
     
     
   ]

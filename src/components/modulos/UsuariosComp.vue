@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <h1 class="text-light pt-3">Usuários do Sistema</h1>
+  <h1 class="text-light">Usuários do Sistema</h1>
     <div class="row">
       <div class="ml-auto col-sm-8 mr-auto">
         <table class="table">
@@ -54,7 +54,8 @@ export default {
       }
   },
   beforeMount() {
-      Vue.http.headers.common['Authorization'] = 'Bearer ' + this.$session.get('token')
+      let token = this.$session.get('token')
+      Vue.http.headers.common['Authorization'] = 'Bearer ' + token
       this.get()
       //this.usuarios = this.$session.get('usuarios')
   }
