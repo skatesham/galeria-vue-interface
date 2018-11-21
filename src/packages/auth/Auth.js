@@ -1,6 +1,6 @@
 export default function (Vue) {
     Vue.auth = {
-        setToken(token, expires) {
+        setToken (token, expires) {
             localStorage.setItem('token', token)
             localStorage.setItem('expires_in', expires)
         },

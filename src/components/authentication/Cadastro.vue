@@ -80,8 +80,7 @@ export default {
 				email: this.email,
 				senha: this.password,
 				papel: {
-					id: 2,
-					descricao: 'Usuario Comum'
+					id: 2
 				}
 			}).then(function () {
 				this.$router.push('/')

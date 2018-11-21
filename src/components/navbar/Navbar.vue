@@ -15,10 +15,10 @@
             <router-link class="nav-link m-2" to="/imagens">Imagens</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link m-2" to="/enviar">EnviarImagem</router-link>
+            <router-link class="nav-link m-2" to="/enviar">Enviar Imagem</router-link>
           </li>
           <li class="nav-item">
-            <router-link v-if="permissao == 'Administrador'" class="nav-link m-2" to="/usuarios">Usuarios</router-link>
+            <router-link v-if="permissao == 'ROLE_ADMIN'" class="nav-link m-2" to="/usuarios">Usuarios</router-link>
           </li>
         </ul>
         <a class="nav-link m-2 my-2 my-md-0" style="cursor:default;" disabled> Usuario: {{ usuario }}</a>

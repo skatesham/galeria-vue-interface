@@ -27,43 +27,49 @@
 </template>
 
 <script>
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import imagem from '@/assets/img/logo.png'
+import { Component, Prop, Vue } from "vue-property-decorator";
+import imagem from "@/assets/img/logo.png";
 
 export default {
-  name: 'UsuariosComp',
-  data(){
-    return{
-      usuarios : ''
+  name: "UsuariosComp",
+  data() {
+    return {
+      usuarios: ""
+    };
+  },
+  methods: {
+    get() {
+      this.$http
+        .get("http://localhost:8888/GaleriaImagens/usuario/getAll")
+        .then(
+          function(response) {
+            console.log(response);
+            this.usuarios = response.body;
+            this.$session.set("usuarios", this.usuarios);
+          },
+          function(err) {
+            if (err.body.status === 401) {
+              this.$session.destroy();
+              this.$router.push("/");
+            } else{
+              this.$router.push("/home");
+            }
+
+          }
+        );
     }
   },
-  methods:{
-      get() {
-          this.$http.get('http://localhost:8888/GaleriaImagens/usuario/getAll')
-          .then(function (response) {
-              if(response.status === 401){
-                this.$session.destroy()
-                this.$router.push('/')
-              } else {
-                console.log(response)
-                this.usuarios = response.body
-                this.$session.set('usuarios',this.usuarios)
-              }
-              
-          })
-      }
-  },
   beforeMount() {
-      let token = this.$session.get('token')
-      Vue.http.headers.common['Authorization'] = 'Bearer ' + token
-      this.get()
-      //this.usuarios = this.$session.get('usuarios')
+    let token = this.$session.get("token");
+    Vue.http.headers.common["Authorization"] = "Bearer " + token;
+    this.get();
+    //this.usuarios = this.$session.get('usuarios')
   }
-}
+};
 </script>
 
 <style>
-img{
+img {
   padding: 20px;
 }
 </style>
